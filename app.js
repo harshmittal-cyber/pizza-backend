@@ -3,8 +3,11 @@ const app = express();
 const cookieParser = require('cookie-parser')
 const bodyParser = require("body-parser")
 const cors = require("cors");
+const errorMiddleware = require('./middleware/error')
 
-
+//import routes
+const adminroutes = require('./router/adminroute')
+const categoryroutes = require('./router/categoryroute');
 
 app.use(express.json());
 app.use(cookieParser())
@@ -21,7 +24,11 @@ const corsOption = {
 }
 
 app.use(cors(corsOption))
+app.use('/api/admin', adminroutes);
+app.use('/api/category', categoryroutes)
 
+
+app.use(errorMiddleware);
 
 app.get('/', (req, res) => {
     res.send('Hi i am from hungrypizza')
