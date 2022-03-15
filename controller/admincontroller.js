@@ -5,14 +5,14 @@ const ErrorHandler = require('../services/errorhandler');
 exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
     const { email, password, storeName } = req.body;
 
-    if (!email || !storeName) {
+    if (!email || !storeName || !password) {
         return next(new ErrorHandler("All Fields required", 400))
     }
 
     let storeExist = await Store.findOne({ email, storeName });
 
     if (storeExist) {
-        return next(new ErrorHandler("User Already Exist", 400))
+        return next(new ErrorHandler("Store Already Exist", 400))
     }
 
 
@@ -70,5 +70,17 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
         token,
         store,
         message: 'Login successfully'
+    })
+})
+
+exports.logout = catchAsyncErrors(async (req, res, next) => {
+    res.cookie('token', null, {
+        expires: new Date(Date.now()),
+        httpOnly: true
+    })
+
+    res.status(200).json({
+        success: true,
+        message: 'Logout Successfully'
     })
 })
