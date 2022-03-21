@@ -4,7 +4,7 @@ const ErrorHandler = require('../services/errorhandler');
 const Category = require('../models/category')
 
 exports.createItem = catchAsyncErrors(async (req, res, next) => {
-    const { categoryId, description, itemName, price, isNonVeg, inStock } = req.body;
+    const { categoryId, description, itemName, price, isNonVeg, inStock, image } = req.body;
 
     const category = await Category.findById(categoryId);
 
