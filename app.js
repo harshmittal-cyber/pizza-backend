@@ -8,6 +8,7 @@ const errorMiddleware = require('./middleware/error')
 //import routes
 const adminroutes = require('./router/adminroute')
 const categoryroutes = require('./router/categoryroute');
+const itemroutes = require('./router/itemroute')
 
 app.use(express.json());
 app.use(cookieParser())
@@ -26,7 +27,7 @@ const corsOption = {
 app.use(cors(corsOption))
 app.use('/api/admin', adminroutes);
 app.use('/api/category', categoryroutes)
-
+app.use('/api/item', itemroutes)
 
 app.use(errorMiddleware);
 
