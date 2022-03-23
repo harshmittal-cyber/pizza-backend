@@ -18,7 +18,7 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getCategories = catchAsyncErrors(async (req, res, next) => {
-    const categories = Category.findOne({}).populate('items');
+    const categories = await Category.find({ storeId: req.params.storeId });
 
     if (!categories) {
         return next(new ErrorHandler('InValid Store', 404))

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
     itemName: {
-        type: Syring,
+        type: String,
         required: [true, 'Item Name is required']
     },
     description: {
