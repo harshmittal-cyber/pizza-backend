@@ -1,7 +1,8 @@
 const Category = require('../models/category');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const ErrorHandler = require('../services/errorhandler');
-const Item = require('../models/item')
+const Item = require('../models/item');
+const Store = require('../models/store')
 
 exports.createCategory = catchAsyncErrors(async (req, res, next) => {
     const category = await Category.create({
@@ -19,7 +20,7 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getCategories = catchAsyncErrors(async (req, res, next) => {
-    const categories = await Category.find({ storeId: req.params.storeId });
+    const categories = await Category.find({ storeId: req.params.storeId }).populate('items');
 
     if (!categories) {
         return next(new ErrorHandler('InValid Store', 404))
@@ -51,4 +52,25 @@ exports.deleteCategory = catchAsyncErrors(async (req, res, next) => {
 
 
 exports.updateCategories = catchAsyncErrors(async (req, res, next) => {
+    let store = await Store.findById(req.params.storeId);
+    let category = await Category.findById(req.params.categoryId);
+
+    if (!store) {
+        return next(new ErrorHandler("Invalid Store", 404))
+    }
+    if (!category) {
+        return next(new ErrorHandler("Invalid Category", 404))
+    }
+
+    const categoryupdate = await Category.findByIdAndUpdate(req.params.categoryId, req.body, {
+        new: true,
+        useFindAndModify: false,
+        runValidatros: true
+    })
+
+    return res.status(200).json({
+        category: categoryupdate,
+        success: true,
+        message: `${categoryupdate.name} category updated successfully`
+    })
 })

@@ -10,6 +10,11 @@ exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("All Fields required", 400))
     }
 
+    let emailExist = await Store.findOne({ email });
+    if (emailExist) {
+        return next(new ErrorHandler("Email Already Exist", 400))
+    }
+
     let storeExist = await Store.findOne({ email, storeName });
 
     if (storeExist) {
