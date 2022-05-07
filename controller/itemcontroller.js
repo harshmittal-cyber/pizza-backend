@@ -52,7 +52,8 @@ exports.updateItem = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        item
+        item,
+        message:'Item Updated Successfully'
     })
 })
 

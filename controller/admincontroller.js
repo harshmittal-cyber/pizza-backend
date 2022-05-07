@@ -2,6 +2,8 @@ const Store = require('../models/store');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const ErrorHandler = require('../services/errorhandler');
 const sendEmail = require('../services/sendEmail');
+const crypto=require('crypto');
+const generateToken=require('../services/generateToken')
 
 exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
     const { email, password, storeName } = req.body;
@@ -98,7 +100,6 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     if (!user) {
         return next(new ErrorHandler("User Not Found", 404))
     }
-
     // Get ResetPassword Token
     const resetToken = user.getresetPasswordToken();
 
@@ -116,12 +117,11 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            message: `Email sent to ${user.email} successfully`,
+            message: `Email sent successfully`,
         });
     } catch (error) {
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
-        console.log(error)
         await user.save({ validateBeforeSave: false });
 
         return next(new ErrorHandler(error.message, 500));
@@ -136,7 +136,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
         .update(req.params.token)
         .digest("hex");
 
-    const user = await User.findOne({
+    const user = await Store.findOne({
         resetPasswordToken,
         resetPasswordExpire: { $gt: Date.now() },
     });
