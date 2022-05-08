@@ -69,6 +69,7 @@ exports.deleteItem = catchAsyncErrors(async (req, res, next) => {
 
     return res.status(200).json({
         _id: req.params.id,
-        message: 'Item Deleted Successfully'
+        message: 'Item Deleted Successfully',
+        success:true
     })
 })
