@@ -4,6 +4,7 @@ const ErrorHandler = require('../services/errorhandler');
 const Category = require('../models/category');
 const Jimp = require('jimp');
 const path = require('path');
+const fs = require('fs')
 
 exports.createItem = catchAsyncErrors(async (req, res, next) => {
     const { categoryId, description, itemName, price, isNonVeg, inStock, image } = req.body;
@@ -14,6 +15,19 @@ exports.createItem = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler('Category does Not Exist', 404))
     }
 
+    const buffer = Buffer.from(image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+
+    let imagePath = `${Date.now()}-${Math.round(
+        Math.random() * 1e9
+    )}.png`;
+
+    const jimpImage = await Jimp.read(buffer);
+
+    await jimpImage
+        .resize(300, Jimp.AUTO)
+        .write(path.resolve(__dirname, `../storage/${imagePath}`))
+
+    imagePath = `${process.env.BASE_LOCAL_URL}/storage/${imagePath}`;
     const item = await Item.create({
         storeId: req.user._id,
         itemName,
@@ -21,7 +35,7 @@ exports.createItem = catchAsyncErrors(async (req, res, next) => {
         isNonVeg,
         inStock,
         description,
-        image,
+        image: imagePath,
         categoryId,
     })
 
@@ -53,7 +67,7 @@ exports.updateItem = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         item,
-        message:'Item Updated Successfully'
+        message: 'Item Updated Successfully'
     })
 })
 
@@ -64,12 +78,17 @@ exports.deleteItem = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler('Item Not Found', 404))
     }
     let categoryId = item.categoryId
+
+    let imageURL = item.image.split(`${process.env.BASE_LOCAL_URL}`)[1];
+
+    await fs.unlinkSync(path.join(__dirname, '../', imageURL));
+
     await item.remove();
     await Category.findByIdAndUpdate(categoryId, { $pull: { items: req.params.itemId } })
 
     return res.status(200).json({
         _id: req.params.id,
         message: 'Item Deleted Successfully',
-        success:true
+        success: true
     })
 })
