@@ -10,12 +10,13 @@ const path = require('path')
 const adminroutes = require('./router/adminroute')
 const categoryroutes = require('./router/categoryroute');
 const itemroutes = require('./router/itemroute')
+const userroutes = require('./router/userroute');
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser())
 app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ limit: "50mb", parameterLimit: 50000 }));
+app.use(bodyParser.urlencoded({ limit: "50mb", parameterLimit: 50000, extended: false }));
 
 app.use('/storage', express.static('storage'));
 
@@ -32,7 +33,8 @@ const corsOption = {
 app.use(cors(corsOption))
 app.use('/api/admin', adminroutes);
 app.use('/api/category', categoryroutes)
-app.use('/api/item', itemroutes)
+app.use('/api/item', itemroutes);
+app.use('/api/user', userroutes);
 
 app.use(errorMiddleware);
 
