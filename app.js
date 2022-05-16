@@ -11,6 +11,7 @@ const adminroutes = require('./router/adminroute')
 const categoryroutes = require('./router/categoryroute');
 const itemroutes = require('./router/itemroute')
 const userroutes = require('./router/userroute');
+const cartroutes = require('./router/cartroute');
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -35,6 +36,7 @@ app.use('/api/admin', adminroutes);
 app.use('/api/category', categoryroutes)
 app.use('/api/item', itemroutes);
 app.use('/api/user', userroutes);
+app.use('/api/cart', cartroutes);
 
 app.use(errorMiddleware);
 

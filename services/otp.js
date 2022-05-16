@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const fast2sms = require('fast-two-sms');
+const axios = require('axios');
 
 module.exports.hashotp = function (data) {
     const hash = crypto
@@ -16,16 +16,18 @@ module.exports.generateotp = function (req, res) {
 }
 
 module.exports.sendOtp = async function (otp, phone) {
-    var options = {
-        authorization: process.env.FAST_TWO_SMS_API,
-        message: `Your Otp for hungry is ${otp}. Valid for 5 minutes.`,
-        numbers: [phone]
-    }
-
-    fast2sms.sendMessage(options).then((res) => {
-        console.log('otp', res)
-        return res
-    });
+    const { data } = await axios.get("https://www.fast2sms.com/dev/bulkV2", {
+        params: {
+            authorization: process.env.FAST_TWO_SMS_API,
+            message: `Your Otp for hungry is ${otp}. Valid for only 5 minutes.`,
+            sender_id: "FTWSMS",
+            route: "v3",
+            language: "english",
+            numbers: phone,
+            flash: '0'
+        }
+    })
+    return data
 }
 
 
