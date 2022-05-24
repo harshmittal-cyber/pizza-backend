@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        unique: true
+        unique: true,
+        sparse: true
     },
     name: {
         type: String,
@@ -25,8 +26,8 @@ const userSchema = new mongoose.Schema({
 
 //JWT Token
 userSchema.methods.getJWTToken = function () {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRE
+    return jwt.sign({ id: this._id }, process.env.JWT_USER_SECRET, {
+        expiresIn: process.env.JWT_USER_EXPIRE
     })
 }
 

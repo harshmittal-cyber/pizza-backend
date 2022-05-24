@@ -32,6 +32,16 @@ exports.getCategories = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
+exports.getCategoryForCustomer = catchAsyncErrors(async (req, res, next) => {
+    const categories = await Category.find({}).populate('items');
+
+    return res.status(200).json({
+        message: 'Category Found Successfully',
+        success: true,
+        categories
+    })
+})
+
 exports.deleteCategory = catchAsyncErrors(async (req, res, next) => {
     const category = await Category.findById(req.params.categoryId);
 

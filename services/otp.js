@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const axios = require('axios');
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 
 module.exports.hashotp = function (data) {
     const hash = crypto
