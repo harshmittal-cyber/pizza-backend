@@ -17,12 +17,12 @@ const addressSchema = new mongoose.Schema({
         trim: true,
     },
     pinCode: {
-        type: Number,
+        type: String,
         required: true,
         trim: true,
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         required: true,
         trim: true
     },
@@ -30,7 +30,7 @@ const addressSchema = new mongoose.Schema({
 });
 
 const userAddressSchema = new mongoose.Schema({
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true

@@ -18,8 +18,8 @@ exports.sendOtp = catchAsyncErrors(async (req, res, next) => {
     let data = `${otp}.${phone}.${expiretime}`;
     let hash = otpworker.hashotp(data);
 
-    await otpworker.sendOtp(otp, phone);
-
+    // await otpworker.sendOtp(otp, phone);
+    console.log(otp)
     return res.status(200).json({
         success: true,
         message: 'Otp sent successfully',
@@ -53,8 +53,9 @@ module.exports.verifyOtp = catchAsyncErrors(async (req, res, next) => {
     let user;
     user = await User.findOne({ phone });
     //if user is not in db the create the user
-    if (!user) {
+    if (user === null) {
         user = await User.create({ phone });
+        await user.save()
     }
 
     const token = user.getJWTToken();

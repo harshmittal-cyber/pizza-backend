@@ -27,7 +27,7 @@ exports.createItem = catchAsyncErrors(async (req, res, next) => {
         .resize(300, Jimp.AUTO)
         .write(path.resolve(__dirname, `../storage/${imagePath}`))
 
-    imagePath = `${process.env.BASE_LOCAL_URL}/storage/${imagePath}`;
+    imagePath = `/storage/${imagePath}`;
     const item = await Item.create({
         storeId: req.user._id,
         itemName,
@@ -79,12 +79,12 @@ exports.deleteItem = catchAsyncErrors(async (req, res, next) => {
     }
     let categoryId = item.categoryId
 
-    let imageURL = item.image.split(`${process.env.BASE_LOCAL_URL}`)[1];
+    let imageURL = item.image;
 
     await fs.unlinkSync(path.join(__dirname, '../', imageURL));
 
     await item.remove();
-    await Category.findByIdAndUpdate(categoryId, { $pull: { items: req.params.itemId } })
+    await Category.findByIdAndUpdate(categoryId, { $pull: { items: req.params.id } })
 
     return res.status(200).json({
         _id: req.params.id,
