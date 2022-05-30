@@ -1,8 +1,8 @@
-const Category = require('../models/category');
-const catchAsyncErrors = require('../middleware/catchAsyncErrors');
-const ErrorHandler = require('../services/errorhandler');
-const Item = require('../models/item');
-const Store = require('../models/store')
+const Category = require('../../models/category');
+const catchAsyncErrors = require('../../middleware/catchAsyncErrors');
+const ErrorHandler = require('../../services/errorhandler');
+const Item = require('../../models/item');
+const Store = require('../../models/store')
 
 exports.createCategory = catchAsyncErrors(async (req, res, next) => {
     const category = await Category.create({

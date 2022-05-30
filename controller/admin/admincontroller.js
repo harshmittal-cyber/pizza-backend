@@ -1,9 +1,9 @@
-const Store = require('../models/store');
-const catchAsyncErrors = require('../middleware/catchAsyncErrors');
-const ErrorHandler = require('../services/errorhandler');
-const sendEmail = require('../services/sendEmail');
-const crypto=require('crypto');
-const generateToken=require('../services/generateToken')
+const Store = require('../../models/store');
+const catchAsyncErrors = require('../../middleware/catchAsyncErrors');
+const ErrorHandler = require('../../services/errorhandler');
+const sendEmail = require('../../services/sendEmail');
+const crypto = require('crypto');
+const generateToken = require('../../services/generateToken')
 
 exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
     const { email, password, storeName } = req.body;

@@ -1,5 +1,5 @@
 const express = require('express');
-const { createItem, deleteItem, updateItem } = require('../controller/itemcontroller');
+const { createItem, deleteItem, updateItem } = require('../controller/admin/itemcontroller');
 const router = express.Router();
 const { isAuthenticated } = require('../middleware/auth')
 
