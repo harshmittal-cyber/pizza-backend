@@ -2,18 +2,6 @@ const Cart = require('../../models/cart');
 const catchAsyncErrors = require('../../middleware/catchAsyncErrors');
 const ErrorHandler = require('../../services/errorhandler');
 
-// function updatecart(condition, update, res) {
-//     Cart.findOneAndUpdate(condition, update, {
-//         upsert: true,
-//         new: true
-//     }).exec((err, result) => {
-//         if (err) {
-//             return next(new ErrorHandler(err, 400))
-//         }
-//         return res.status(200).json({ message: 'Updated successfully', success: true, cart: result })
-//     })
-// }
-
 function runUpdate(condition, updateData) {
     return new Promise((resolve, reject) => {
         //you update code here
@@ -54,7 +42,7 @@ module.exports.addtocart = catchAsyncErrors(async (req, res, next) => {
                 promiseArray.push(runUpdate(condition, update));
             })
             Promise.all(promiseArray)
-                .then((response) => res.status(200).json({ response }))
+                .then((response) => res.status(200).json())
                 .catch((error) => res.status(400).json({ error }))
         } else {
             //create new cart
@@ -75,9 +63,6 @@ module.exports.addtocart = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getCartItems = (req, res) => {
-    //const { user } = req.body.payload;
-    //if(user){
-
     Cart.findOne({ userId: req.user._id })
         .populate("cartItems.productId", "_id itemName price image description")
         .exec((error, cart) => {
@@ -85,7 +70,6 @@ exports.getCartItems = (req, res) => {
             if (cart) {
                 let cartItems = {};
                 cart.cartItems.forEach((item, index) => {
-                    console.log('item', item)
                     cartItems[item.productId._id.toString()] = {
                         _id: item.productId._id.toString(),
                         itemName: item.productId.itemName,
@@ -100,7 +84,6 @@ exports.getCartItems = (req, res) => {
                 return res.status(200).json({ cartItems: {}, success: true })
             }
         });
-    //}
 };
 
 

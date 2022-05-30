@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createCategory, getCategories, deleteCategory, updateCategories, getCategoryForCustomer } = require('../controller/categorycontroller');
+const { createCategory, getCategories, deleteCategory, updateCategories, getCategoryForCustomer } = require('../controller/admin/categorycontroller');
 const { isAuthenticated } = require('../middleware/auth')
 
 router.post('/create/:storeId', isAuthenticated, createCategory)

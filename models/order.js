@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    user: {
+    orderId: {
+        type: String,
+        required: true
+    },
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
     addressId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserAddress.address',
+        ref: 'Address',
         required: true
     },
     orderAmount: {
@@ -22,7 +26,7 @@ const orderSchema = new mongoose.Schema({
     },
     paymentStatus: {
         type: String,
-        enum: ['pending', 'completed', 'cancelled', 'refund']
+        enum: ['pending', 'paid', 'cancelled', 'refund']
     },
     items: [
         {
@@ -34,7 +38,7 @@ const orderSchema = new mongoose.Schema({
                 type: Number,
                 required: true
             },
-            qty: {
+            quantity: {
                 type: Number,
                 required: true
             }
