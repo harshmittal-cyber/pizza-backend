@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require("body-parser")
 const cors = require("cors");
 const errorMiddleware = require('./middleware/error')
-const multer = require('multer');
 const path = require('path')
 //import routes
 const adminroutes = require('./router/adminroute')
