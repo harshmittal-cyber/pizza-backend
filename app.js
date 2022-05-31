@@ -13,6 +13,7 @@ const userroutes = require('./router/userroute');
 const cartroutes = require('./router/cartroute');
 const addressroutes = require('./router/addressroute');
 const orderroutes = require('./router/orderroute');
+const paymentRoutes = require('./router/paymentRoute');
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -40,6 +41,7 @@ app.use('/api/user', userroutes);
 app.use('/api/cart', cartroutes);
 app.use('/api/address', addressroutes);
 app.use('/api/order', orderroutes);
+app.use('/api/payment', paymentRoutes);
 
 app.use(errorMiddleware);
 

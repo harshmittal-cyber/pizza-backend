@@ -6,7 +6,7 @@ const { contactMail } = require('../../services/sendEmail')
 module.exports.contact = catchAsyncErrors(async (req, res, next) => {
     const { username, message, date, email, location, contact, organisation } = req.body;
 
-    if (Object.keys(req.body).length < 7) {
+    if (!username || !message || !date || !email || !location || !contact || !organisation) {
         return next(new ErrorHandler("All Fields Required", 400))
     }
 
