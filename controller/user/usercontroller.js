@@ -18,8 +18,8 @@ exports.sendOtp = catchAsyncErrors(async (req, res, next) => {
     let data = `${otp}.${phone}.${expiretime}`;
     let hash = otpworker.hashotp(data);
 
-    // await otpworker.sendOtp(otp, phone);
-    console.log(otp)
+    await otpworker.sendOtp(otp, phone);
+
     return res.status(200).json({
         success: true,
         message: 'Otp sent successfully',
@@ -47,7 +47,7 @@ module.exports.verifyOtp = catchAsyncErrors(async (req, res, next) => {
     const isValid = otpworker.verifyOtp(hashotp, data);
 
     if (!isValid) {
-        return next(new ErrorHandler("Invalid Otp", 401))
+        return next(new ErrorHandler("Invalid OTP", 401))
     }
 
     let user;
