@@ -31,7 +31,9 @@ const corsOption = {
         "http://localhost:3000",
         "http://localhost:3001",
         "http://hungrypizza.herokuapp.com",
-        "https://hungrypizza.herokuapp.com"
+        "https://hungrypizza.herokuapp.com",
+        "https://hungryadmin.herokuapp.com",
+        "http://hungryadmin.herokuapp.com/"
     ]
 }
 
