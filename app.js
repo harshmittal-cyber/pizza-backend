@@ -33,7 +33,7 @@ const corsOption = {
         "http://hungrypizza.herokuapp.com",
         "https://hungrypizza.herokuapp.com",
         "https://hungryadmin.herokuapp.com",
-        "http://hungryadmin.herokuapp.com/"
+        "http://hungryadmin.herokuapp.com"
     ]
 }
 
