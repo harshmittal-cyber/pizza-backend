@@ -3,7 +3,7 @@ const path = require('path');
 const dotenv = require("dotenv").config();
 const database = require('./config/mongoose')
 
-const port = process.env.PORT || 4000
+const port = 4000
 
 database();
 
