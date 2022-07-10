@@ -17,8 +17,8 @@ exports.sendOtp = catchAsyncErrors(async (req, res, next) => {
     //sendign the data with otp and phone no. and expiretime
     let data = `${otp}.${phone}.${expiretime}`;
     let hash = otpworker.hashotp(data);
-
-    await otpworker.sendOtp(otp, phone);
+    const origin = req.get('origin')
+    await otpworker.sendOtp(otp, phone, origin);
 
     return res.status(200).json({
         success: true,
