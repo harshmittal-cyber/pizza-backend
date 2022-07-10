@@ -37,7 +37,8 @@ const corsOption = {
         "https://hungry-70626.web.app",
         "https://hungry-70626.firebaseapp.com",
         "https://hungrypizza.shop",
-        "http://hungrypizza.shop"
+        "http://hungrypizza.shop",
+        "http://localhost:5000"
     ]
 }
 

@@ -16,11 +16,11 @@ module.exports.generateotp = function (req, res) {
     return otp;
 }
 
-module.exports.sendOtp = async function (otp, phone) {
+module.exports.sendOtp = async function (otp, phone, origin) {
     const { data } = await axios.get("https://www.fast2sms.com/dev/bulkV2", {
         params: {
             authorization: process.env.FAST_TWO_SMS_API,
-            message: `Your Otp for hungry is ${otp}. Valid for only 5 minutes.`,
+            message: `Your Otp for hungry is ${otp} @${origin} #${otp}`,
             sender_id: "FTWSMS",
             route: "v3",
             language: "english",
