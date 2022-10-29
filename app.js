@@ -23,23 +23,24 @@ app.use(bodyParser.urlencoded({ limit: "50mb", parameterLimit: 50000, extended: 
 
 app.use('/storage', express.static('storage'));
 
+// [
+//     "http://localhost:2000",
+//     "http://localhost:2001",
+//     "http://localhost:3000",
+//     "http://localhost:3001",
+//     "http://hungrypizza.herokuapp.com",
+//     "https://hungrypizza.herokuapp.com",
+//     "https://hungryadmin.herokuapp.com",
+//     "http://hungryadmin.herokuapp.com",
+//     "https://hungry-70626.web.app",
+//     "https://hungry-70626.firebaseapp.com",
+//     "https://hungrypizza.shop",
+//     "http://hungrypizza.shop",
+//     "http://localhost:5000"
+// ]
 const corsOption = {
     credentials: true,
-    origin: [
-        "http://localhost:2000",
-        "http://localhost:2001",
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://hungrypizza.herokuapp.com",
-        "https://hungrypizza.herokuapp.com",
-        "https://hungryadmin.herokuapp.com",
-        "http://hungryadmin.herokuapp.com",
-        "https://hungry-70626.web.app",
-        "https://hungry-70626.firebaseapp.com",
-        "https://hungrypizza.shop",
-        "http://hungrypizza.shop",
-        "http://localhost:5000"
-    ]
+    origin: true
 }
 
 app.use(cors(corsOption))
