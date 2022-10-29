@@ -21,6 +21,13 @@ app.use(cookieParser())
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", parameterLimit: 50000, extended: false }));
 
+
+const corsOption = {
+    credentials: true,
+    origin: true
+}
+
+app.use(cors(corsOption))
 app.use('/storage', express.static('storage'));
 
 // [
@@ -38,12 +45,7 @@ app.use('/storage', express.static('storage'));
 //     "http://hungrypizza.shop",
 //     "http://localhost:5000"
 // ]
-const corsOption = {
-    credentials: true,
-    origin: true
-}
 
-app.use(cors(corsOption))
 app.use('/api/admin', adminroutes);
 app.use('/api/category', categoryroutes)
 app.use('/api/item', itemroutes);
